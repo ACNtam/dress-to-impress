@@ -15,7 +15,7 @@ root.render(
     audience={process.env.REACT_APP_AUTH0_AUDIENCE}
     >
     <App />
-  </Auth0Provider>,
+  </Auth0Provider>
   </React.StrictMode >
 );
 

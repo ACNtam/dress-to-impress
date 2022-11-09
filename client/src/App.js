@@ -5,6 +5,7 @@ import { useAuth0 } from "@auth0/auth0-react"
 import Callback from './pages/Callback';
 import Protected from './pages/Protected';
 import Profile from './pages/Profile';
+import Navbar from './component/Navbar';
 
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
 
   return (
     <BrowserRouter className="App">
+      <Navbar/>
       <Routes >
         <Route path='/' element={<Home />} />
         <Route path='/callback' element={<Callback />} />
