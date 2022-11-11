@@ -5,7 +5,48 @@ import db from "../config/db.js"
 
 const router = express.Router()
 
-router.get('/items', async function (req, res, next) {
+router.get('/items', async function (req, res,){
+    // https://api2.shop.com/AffiliatePublisherNetwork/v2/products?publisherId=TEST&locale=en_US&site=shop&shipCountry=US&perPage=15&categoryId=1-32838&onlyMaProducts=false
+    try {
+        // const user = await db.any('SELECT * FROM users WHERE id =$1', [req.params.id]);
+
+
+        const params = new URLSearchParams({
+            //getting users items
+            publisherId: "TEST",
+            locale: "en_US",
+            site: "shop",
+            shipCountry: "US",
+            onlyMaProducts: "false",
+            categoryId: "1-32838",
+        });
+        const url = `https://api2.shop.com/AffiliatePublisherNetwork/v2/products?${params}`;
+
+        //a promise type, fetching to the SHOP.COM API
+        fetch(url, {
+            headers: {
+                api_Key: process.env.SHOP_API_KEY
+            }
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                
+
+                //sending response to client which is fashion
+                res.json({ data });
+            })
+            .catch((err) => {
+                console.log(err.message);
+                return res.status(500).json({ message: "Error from server" });
+            });
+
+    } catch (e) {
+        console.log(e.message)
+        return res.status(500).json({ message: "Error from server" });
+    }
+});
+
+router.get('/catagories', async function (req, res, next) {
 
     try {
         // const user = await db.any('SELECT * FROM users WHERE id =$1', [req.params.id]);
