@@ -6,6 +6,7 @@ import Callback from './pages/Callback';
 import Protected from './pages/Protected';
 import Profile from './pages/Profile';
 import Navbar from './component/Navbar';
+import Recommendations from './pages/Recommendations';
 
 
 
@@ -29,6 +30,7 @@ function App() {
         <Route path='/callback' element={<Callback />} />
         <Route path='/protected' element={<Protected />} />
         <Route path='/profile' element={<Profile />} />
+        <Route path='/recommendations' element={<Recommendations />} />
       </Routes>
     </BrowserRouter>
   );
