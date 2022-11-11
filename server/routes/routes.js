@@ -72,7 +72,7 @@ router.get('/catagories', async function (req, res, next) {
             .then((data) => {
                 
 
-                //sending response to client which is weather
+                //sending response to client which is fashion
                 res.json({ data });
             })
             .catch((err) => {
