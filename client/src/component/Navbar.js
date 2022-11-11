@@ -18,7 +18,7 @@ function Navbar() {
                 </li>
 
                 <li>
-                    <Link to={"/recommend"}>Recommendations</Link>
+                    <Link to={"/recommendations"}>Recommendations</Link>
                 </li>
                 <li>
                     <Link to={"/contact"}>Contact</Link>
