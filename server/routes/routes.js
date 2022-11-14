@@ -1,11 +1,12 @@
 import express from "express";
+import authToken from "../middlewares/auth.mjs";
 import cors from "cors";
 import fetch from "node-fetch"
 import db from "../config/db.js"
 
 const router = express.Router()
 
-router.get('/items', async function (req, res,){
+router.get('/items', async function (req, res,) {
     // https://api2.shop.com/AffiliatePublisherNetwork/v2/products?publisherId=TEST&locale=en_US&site=shop&shipCountry=US&perPage=15&categoryId=1-32838&onlyMaProducts=false
     try {
         // const user = await db.any('SELECT * FROM users WHERE id =$1', [req.params.id]);
@@ -30,7 +31,7 @@ router.get('/items', async function (req, res,){
         })
             .then((res) => res.json())
             .then((data) => {
-                
+
 
                 //sending response to client which is fashion
                 res.json({ data });
@@ -70,7 +71,7 @@ router.get('/catagories', async function (req, res, next) {
         })
             .then((res) => res.json())
             .then((data) => {
-                
+
 
                 //sending response to client which is fashion
                 res.json({ data });
@@ -109,22 +110,40 @@ router.post('/me', cors(), async (req, res) => {
     res.send({})
 });
 
-router.post("/profile", async  (req,res)=>{
+router.post("/profile", async (req, res) => {
     try {
-        const {industry, occupation, gender, style, occassion, email} = req.body
-       const userResult = await db.oneOrNone("SELECT id FROM users WHERE email=$1", [email])
-    //    if(userResult.row){
-    //     return 
-    //    }
-    const query = 'INSERT INTO profile(industry, occupation, gender, style, occassion, user_id) VALUES($1, $2, $3, $4, $5, $6) RETURNING *'
-        const values = [industry, occupation, gender, style, occassion, userResult.row.id]
+        const { industry, occupation, gender, style, occassion, email } = req.body
+        const userResult = await db.oneOrNone("SELECT id FROM users WHERE email=$1", [email])
+
+        console.log(userResult)
+        //check if user with email exist, if not error res
+        if (!userResult) {
+            return res.status(400).json({ message: "user not found" })
+        }
+
+        const query = 'INSERT INTO profile(industry, occupation, gender, style, occassion, user_email) VALUES($1, $2, $3, $4, $5, $6) RETURNING *'
+        const values = [industry, occupation, gender, style, occassion, email]
         const result = await db.query(query, values);
-        return res.status(201).json(result.rows[0])
+        return res.status(201).json({ message: "user profile created" })
     } catch (error) {
         console.log(error)
-      return res.status(500).json({message: "Internal server error"}) 
+        return res.status(500).json({ message: "Internal server error" })
     }
-    
+
+})
+
+router.get("/profile/:email", async(req, res)=>{
+try {
+    console.log(req.params)
+    const email = req.params.email
+    const userResult = await db.oneOrNone("SELECT * FROM profile WHERE user_email=$1", [email])
+    res.json(userResult)
+} catch (error) {
+    console.log(error)
+        return res.status(500).json({ message: "Internal server error" })
+}
 })
 
 export default router;
+
+
