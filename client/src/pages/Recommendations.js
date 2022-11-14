@@ -1,12 +1,18 @@
 import { useEffect, useState } from "react"
 import React  from 'react'
+import { useAuth0 } from "@auth0/auth0-react"
 
 function Recommendations() {
     const [recommendations, setRecommendations] = useState({})
+    const {user, isAuthenticated} = useAuth0()
 
     //fetch request everytime the component is loaded, useEffect is executed
     useEffect(() => {
-        fetch("/api/items")
+        //if no user sub dont't fetch
+    if(!user.sub){
+        return 
+    }
+        fetch(`/api/items?sub=${user.sub}`)
 
             //callback will accept response from server
             .then((res) => {
@@ -20,7 +26,8 @@ function Recommendations() {
             .catch((error) => {
                 console.log(error)
             })
-    }, [])
+        
+        }, [isAuthenticated])
 
     return (
         <div>
