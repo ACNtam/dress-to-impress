@@ -7,7 +7,7 @@ async function Protected() {
     const { getAccessTokenSilently } = useAuth0()
     //gives access token
     const accessToken = await getAccessTokenSilently()
-    fetch("http://localhost:8080/protected", {
+    fetch("/protected", {
         headers: {Authorization: `Bearer ${accessToken}`, 
         "content-type": "application/json"
     }   

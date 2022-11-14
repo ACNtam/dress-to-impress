@@ -1,15 +1,25 @@
 import dotenv from "dotenv";
 //envoriment variables can be read
 dotenv.config();
-import express from 'express';
 import cors from 'cors';
 import authToken from './middlewares/auth.mjs';
 import router from "./routes/routes.js";
+import path from "path";
+import express from 'express';
+import { fileURLToPath } from "url";
+
+
+const app = express();
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const REACT_BUILD_DIR = path.join(__dirname, "..", "client", "build");
+app.use(express.static(REACT_BUILD_DIR));
 
 const clientURL = process.env.CLIENT_ORIGIN_URL
 
-const app = express();
-const PORT = 8080;
+const PORT = process.env.PORT || 8080;
 
 app.use(cors({
   origin:clientURL,
