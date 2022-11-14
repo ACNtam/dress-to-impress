@@ -10,8 +10,8 @@ router.get('/items', async function (req, res,) {
     // https://api2.shop.com/AffiliatePublisherNetwork/v2/products?publisherId=TEST&locale=en_US&site=shop&shipCountry=US&perPage=15&categoryId=1-32838&onlyMaProducts=false
     try {
         // const user = await db.any('SELECT * FROM users WHERE id =$1', [req.params.id]);
-
-
+        const occassionResult = await db.query("SELECT profile.occassion FROM users JOIN profile ON profile.user_email=users.email WHERE users.sub=$1", [req.query.sub])
+        console.log(occassionResult)
         const params = new URLSearchParams({
             //getting users items
             publisherId: "TEST",
@@ -20,6 +20,7 @@ router.get('/items', async function (req, res,) {
             shipCountry: "US",
             onlyMaProducts: "false",
             categoryId: "1-32838",
+            term: occassionResult?.[0]?.occassion ??undefined
         });
         const url = `https://api2.shop.com/AffiliatePublisherNetwork/v2/products?${params}`;
 
