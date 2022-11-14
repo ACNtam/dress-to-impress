@@ -5,11 +5,11 @@ import ProfileForm from '../component/ProfileForm';
 
 
 function Profile() {
-  useEffect(()=>{
-
-  },[])
-  const GetProfile = async ()=>{
-
+  useEffect(() => {
+    getProfile()
+  }, [])
+  const getProfile = async () => {
+    fetch("/api/profile/" + user.name )
   }
 
   //Destructuring keys from useAuth0 object
@@ -21,10 +21,10 @@ function Profile() {
 
   if (isAuthenticated) {
     return (
-      
+
       <div>
         Hello {user.name}{' '}
-        <ProfileForm />
+        <ProfileForm user={user} />
         <button onClick={() => logout({ returnTo: window.location.origin })}>
           Log out
         </button>
