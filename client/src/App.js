@@ -7,6 +7,7 @@ import Protected from './pages/Protected';
 import Profile from './pages/Profile';
 import Navbar from './component/Navbar';
 import Recommendations from './pages/Recommendations';
+import Contact from './component/Contact';
 
 
 
@@ -31,6 +32,7 @@ function App() {
         <Route path='/protected' element={<Protected />} />
         <Route path='/profile' element={<Profile />} />
         <Route path='/recommendations' element={<Recommendations />} />
+        <Route path='/contact' element={<Contact />} />
       </Routes>
     </BrowserRouter>
   );
