@@ -19,6 +19,9 @@ function ProfileForm({ user }) {
         .then((res)=>res.json())
         .then((data)=>{
             console.log(data)
+
+            //redirects profile page to recommedations after filling out form
+            window.location.href="/recommendations"
         })
         .catch((error)=>{
             console.log(error.message)
