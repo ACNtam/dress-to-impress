@@ -143,8 +143,12 @@ try {
     console.log(error)
         return res.status(500).json({ message: "Internal server error" })
 }
+
+// router.get('/profile-complete', async (req, res) => {
+//     const createBanner = {
+//         sub: req.query.sub
+
+//     }
 })
 
 export default router;
-
-
