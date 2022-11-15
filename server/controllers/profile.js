@@ -1,11 +1,11 @@
-import db from "../config/db";
+// import db from "../config/db";
  
  
-function createProfile(){
+// function createProfile(){
     
-}
-function getProfileById(){
+// }
+// function getProfileById(){
  
-}
+// }
  
-export {createProfile, getProfileById}
+// export {createProfile, getProfileById}
