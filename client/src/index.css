@@ -3,3 +3,23 @@
   padding: 0;
   box-sizing: border-box;
 }
+
+.reference {
+  position: relative;
+  background: tomato;
+  width: 100px;
+  height: 100px;
+}
+.popout-menu {
+  position: absolute;
+  visibility: hidden;
+  left: 100%;
+  background: #333;
+  color: white;
+  padding: 15px;
+}
+.reference:hover > .popout-menu,
+.reference:focus > .popout-menu,
+.reference:focus-within > .popout-menu {
+  visibility: visible;
+}
