@@ -1,14 +1,25 @@
 import dotenv from "dotenv";
 //envoriment variables can be read
 dotenv.config();
-import express from 'express';
 import cors from 'cors';
 import authToken from './middlewares/auth.mjs';
+import router from "./routes/routes.js";
+import path from "path";
+import express from 'express';
+import { fileURLToPath } from "url";
+
+
+const app = express();
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const REACT_BUILD_DIR = path.join(__dirname, "..", "client", "build");
+app.use(express.static(REACT_BUILD_DIR));
 
 const clientURL = process.env.CLIENT_ORIGIN_URL
 
-const app = express();
-const PORT = 8080;
+const PORT = process.env.PORT || 8080;
 
 app.use(cors({
   origin:clientURL,
@@ -17,14 +28,14 @@ app.use(cors({
     maxAge:86400 
 }));
 
-app.use((req,res,next)=>{
-console.log(req.headers)
-next()
-})
+app.use(express.json())
 
-app.get("/", (req,res) =>{
-    res.send("Welcome to my page")
-})
+// app.use((req,res,next)=>{
+// console.log(req.headers)
+// next()
+// })
+
+app.use("/api", router)
 
 //midware added between route and callback function
 app.get("/protected", authToken, (req,res) =>{
