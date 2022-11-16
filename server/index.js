@@ -4,6 +4,7 @@ dotenv.config();
 import express from 'express';
 import cors from 'cors';
 import authToken from './middlewares/auth.mjs';
+import router from "./routes/routes.js";
 
 const clientURL = process.env.CLIENT_ORIGIN_URL
 
@@ -17,14 +18,14 @@ app.use(cors({
     maxAge:86400 
 }));
 
-app.use((req,res,next)=>{
-console.log(req.headers)
-next()
-})
+app.use(express.json())
 
-app.get("/", (req,res) =>{
-    res.send("Welcome to my page")
-})
+// app.use((req,res,next)=>{
+// console.log(req.headers)
+// next()
+// })
+
+app.use("/api", router)
 
 //midware added between route and callback function
 app.get("/protected", authToken, (req,res) =>{

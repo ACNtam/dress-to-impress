@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link, Outlet } from "react-router-dom";
+import AuthenticationButton from './authentication-button';
 
 function Navbar() {
 
@@ -23,6 +24,7 @@ function Navbar() {
                     <Link to={"/contact"}>Contact</Link>
                 </li>
             </ul>
+            <AuthenticationButton/>
     </div >
   )
 }
